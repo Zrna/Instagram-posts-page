@@ -28,6 +28,6 @@ To get photos from your profile you need to have **ACCESS TOKEN** and profile ne
 
 **Follow [this video](https://www.youtube.com/watch?v=WTBqQQN910A) to get your ACCESS_TOKEN**.
 
-When you have access token go to **js/main.js file** and in the **line 2** set `const token` value to your access token (e.g. `const token = 11111111111.2222222.3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a`)
+When you have access token go to **js/main.js file** and in the **line 2** set `const token` value to your access token (e.g. `const token = "11111111111.2222222.3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a3a"`)
 
 To set up number of posts just change `const photosNum` value in main.js.
