@@ -1,0 +1,55 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.post-box {
+  height: 400px;
+  padding: 0;
+  border: 1px solid #e6e6e6;
+  position: relative;
+}
+
+.post-video {
+  font-size: 12px;
+}
+
+.img-box {
+  height: 250px;
+  position: relative;
+}
+
+.img-box img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-height: 100%;
+}
+
+.post-details {
+  position: absolute;
+  font-size: 16px;
+  bottom: 0px;
+  margin-left: 10px;
+}
+
+.read-more {
+  color: #a9a9a9;
+}
+
+.post-date {
+  font-size: 11px !important;
+  color: #777;
+  text-transform: uppercase;
+}
