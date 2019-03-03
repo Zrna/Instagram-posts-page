@@ -1,4 +1,4 @@
-getImages = () => {
+getPosts = () => {
   const token = "YOUR ACCESS TOKEN"; // insert your ACCESS_TOKEN
   const photosNum = 1000; // how much photos do you want to get
 
@@ -47,7 +47,7 @@ getImages = () => {
         const created_time = jsonData.created_time;
         const instaDate = new Date(parseInt(created_time) * 1000);
 
-        var monthsList = [
+        const monthsList = [
           "January",
           "February",
           "March",
@@ -68,20 +68,23 @@ getImages = () => {
 
         const fullDate = month + " " + date + ", " + year;
 
-        // append content to div
-        $("#images-list").append(
-          "<div class='col-md-3 mt-4'><a href='" +
-            link +
-            " 'target='_blank'><div class='post-box'><div class='img-box'><img src=" +
-            image +
-            " /></div><div class='post-details'> <p><strong> " +
-            likes +
-            " likes</strong> <br /> " +
-            description +
-            " </p><p class='post-date'>" +
-            fullDate +
-            "</p></div></div></a></div>"
-        );
+        // append post to div
+        const post = `<div class='col-md-3 mt-4'>
+                          <a href="${link}" target="_blank">
+                            <div class="post-box">
+                              <div class="img-box">
+                                <img src="${image}" alt="${description}" />
+                              </div>
+                              <div class="post-details">
+                                <p><strong>${likes}</strong></p>
+                                <p>${description}</p>
+                                <p class="post-date">${fullDate}</p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>`;
+
+        $("#images-list").append(post);
       }
     })
     .catch(error => {
@@ -89,4 +92,4 @@ getImages = () => {
     });
 };
 
-getImages();
+getPosts();
