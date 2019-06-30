@@ -1,36 +1,30 @@
 getPosts = () => {
   const token = "YOUR ACCESS TOKEN"; // insert your ACCESS_TOKEN
-  const photosNum = 1000; // how much photos do you want to get
-
-  const url =
-    "https://api.instagram.com/v1/users/self/media/recent/?access_token=" +
-    token +
-    "&count=" +
-    photosNum;
+  const numberOfPhotos = 1000;
+  const url = `https://api.instagram.com/v1/users/self/media/recent/?access_token=${token}&count=${numberOfPhotos}`;
 
   fetch(url)
     .then(res => res.json())
     .then(res => {
       console.log(res);
+
+      if (res.meta.code !== 200) throw new Error(res.meta.error_message)
+
       for (n in res.data) {
-        // just shortcut for json
-        const jsonData = res.data[n];
+        const response = res.data[n];
 
-        // post URL
-        const link = jsonData.link;
+        const link = response.link;
+        const image = response.images.standard_resolution.url;
 
-        // get image
-        const image = jsonData.images.standard_resolution.url;
+        let likes = response.likes.count;
+        likes = likes <= 1 ? `${likes} like` : `${likes} likes`;
 
-        // get likes on image
-        const likes = jsonData.likes.count;
+        let description = response.caption;
 
-        // post description
-        let description;
-        if (jsonData.caption === null) {
+        if (description === null) {
           description = "";
         } else {
-          description = jsonData.caption.text;
+          description = description.text;
 
           if (description.length > 50) {
             description =
@@ -39,36 +33,20 @@ getPosts = () => {
           }
         }
 
-        if (jsonData.type === "video") {
+        if (response.type === "video") {
           description += " <small><strong>(video)</strong></small>";
         }
 
-        // date post
-        const created_time = jsonData.created_time;
-        const instaDate = new Date(parseInt(created_time) * 1000);
+        const created_time = response.created_time;
+        const postDate = new Date(parseInt(created_time) * 1000);
 
-        const monthsList = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
-        ];
+        const monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        const month = monthsList[instaDate.getMonth()];
-        const date = instaDate.getDate();
-        const year = instaDate.getFullYear();
+        const month = monthsList[postDate.getMonth()];
+        const date = postDate.getDate();
+        const year = postDate.getFullYear();
+        const fullDate = `${month} ${date}, ${year}`;
 
-        const fullDate = month + " " + date + ", " + year;
-
-        // append post to div
         const post = `<div class='col-md-3 mt-4'>
                           <a href="${link}" target="_blank">
                             <div class="post-box">
@@ -88,7 +66,9 @@ getPosts = () => {
       }
     })
     .catch(error => {
-      console.error(error);
+      console.log(error);
+      const errorMessage = `<p>${error}</p>`;
+      $("#images-list").append(errorMessage);
     });
 };
 
